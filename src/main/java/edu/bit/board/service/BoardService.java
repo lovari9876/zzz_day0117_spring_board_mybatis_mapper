@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.bit.board.mapper.BoardMapper;
+import edu.bit.board.page.Criteria;
 import edu.bit.board.vo.BoardVO;
 
 @Service
@@ -14,12 +15,12 @@ public class BoardService {
 	@Autowired
 	BoardMapper boardMapper;
 
-	// °Ô½ÃÆÇ List¸¦ À§ÇÑ Ãâ·ÂÇÏ´Â ºñÁî´Ï½º·ÎÁ÷
+	// ê²Œì‹œíŒ Listë¥¼ ìœ„í•œ ì¶œë ¥í•˜ëŠ” ë¹„ì¦ˆë‹ˆìŠ¤ë¡œì§
 	public List<BoardVO> selectBoardList() {
 		return boardMapper.selectBoardList();
 	}
 
-	// °Ô½ÃÆÇ¿¡¼­ ¸®ÇÃÀ» ¾²´Â ·ÎÁ÷: sql¹® 2°³ ÇÊ¿ä(1. step 1°³¾¿ +1, 2. ´ñ±ÛÀÛ¼º)
+	// ê²Œì‹œíŒì—ì„œ ë¦¬í”Œì„ ì“°ëŠ” ë¡œì§: sqlë¬¸ 2ê°œ í•„ìš”(1. step 1ê°œì”© +1, 2. ëŒ“ê¸€ì‘ì„±)
 	public void writeReply(BoardVO boardVO) {
 		boardMapper.updateShape(boardVO); // 1
 		boardMapper.insertReply(boardVO); // 2
@@ -39,6 +40,14 @@ public class BoardService {
 
 	public void deleteBoard(String bId) {
 		boardMapper.deleteBoard(bId);
+	}
+
+	public int selectCountBoard() {
+		return boardMapper.selectAllBoard();
+	}
+
+	public List<BoardVO> selectBoardListPage(Criteria criteria) {
+		return boardMapper.selectBoardListPage(criteria);
 	}
 
 }

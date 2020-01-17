@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper 태그 내부에 sql문을 넣으면 mybatis가 알아서 해준다.. -->
+<mapper namespace="edu.bit.board.mapper.BoardMapper">
+	<!--page=2&perPageNum=10 -->
+<!-- 	<select id="selectBoardListPage"
+		resultType="edu.bit.board.vo.BoardVO"
+		parameterType="edu.bit.board.page.Criteria">
+	<![CDATA[
+	SELECT * FROM
+	(
+        SELECT
+            A.*,
+            ROWNUM AS RNUM,
+            COUNT(*) OVER() AS TOTCNT
+        FROM
+            (
+                SELECT
+                    *
+                FROM
+                    mvc_board
+                ORDER BY bid desc
+             
+            ) A
+    )WHERE RNUM >= #{startNum} AND RNUM <= #{endNum}
+  	]]>
+	</select> -->
+	<!-- 서로 다른 개수의 결과값을 가지는 column들과 count(*)를 동시에 출력하고 싶으면 -->
+	<!-- COUNT(*) OVER()를 써주어야 함: 전체 개수를 세준다 -->
+
+	<!-- 댓글 하나로 묶어 페이징 처리하는 쿼리 -->
+	<select id="selectBoardListPage"
+		resultType="edu.bit.board.vo.BoardVO"
+		parameterType="edu.bit.board.page.Criteria">
+	<![CDATA[
+	SELECT * FROM
+	(
+        SELECT
+            A.*,
+            ROWNUM AS RNUM,
+            COUNT(*) OVER() AS TOTCNT
+        FROM
+            (
+                SELECT
+                    *
+                FROM
+                    mvc_board
+                ORDER BY bGroup desc, bStep asc
+             
+            ) A
+    )WHERE RNUM >= #{startNum} AND RNUM <= #{endNum}
+  	]]>
+	</select>
+</mapper>

@@ -8,10 +8,11 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import edu.bit.board.page.Criteria;
 import edu.bit.board.vo.BoardVO;
 
-// Àü¿¡ dao ¸¸µé°í @Repository ºÙ¿©¼­ ¿µ¼Ó°èÃşÀ» ¸¸µé¾ú´Ù¸é,
-// mapper class°¡ ÀÌÁ¦ ¿µ¼Ó°èÃş!!(persistent interface)
+//ì „ì— dao ë§Œë“¤ê³  @Repository ë¶™ì—¬ì„œ ì˜ì†ê³„ì¸µì„ ë§Œë“¤ì—ˆë‹¤ë©´,
+//mapper classê°€ ì´ì œ ì˜ì†ê³„ì¸µ!!(persistent interface)
 public interface BoardMapper {
 	@Select("select bId, bName, bTitle, bContent, bDate, bHit, bGroup, bStep, bIndent from mvc_board order by bGroup desc, bStep asc")
 	public List<BoardVO> selectBoardList();
@@ -37,5 +38,7 @@ public interface BoardMapper {
 	@Delete("delete mvc_board where bId = #{bId}")
 	public void deleteBoard(String bId);
 
-	// @Param ¾ÈÀû¾îµµ ¾î´ÀÁ¤µµ Çã¿ëÇÏ´Â Áß...
+	public List<BoardVO> selectBoardListPage(Criteria criteria);
+
+	// @Param ì•ˆì ì–´ë„ ì–´ëŠì •ë„ í—ˆìš©í•˜ëŠ” ì¤‘...
 }
