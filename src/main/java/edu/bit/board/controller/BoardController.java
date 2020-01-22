@@ -120,6 +120,7 @@ public class BoardController {
 
 		model.addAttribute("list", boardList);
 		model.addAttribute("pageMaker", pageMaker);
+		
 		return "list2";
 	}
 
